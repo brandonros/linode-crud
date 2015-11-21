@@ -1,0 +1,13 @@
+{
+	"api_key": "",
+	"data_center_id": 4,
+	"plan_id": 1,
+	"distribution_id": 124,
+	"kernel_id": 138,
+	"disk_size": 24576,
+	"root_pass": "",
+	"num_instances": 20,
+	"launch_cmd": "",
+	"update_cmd": "",
+	"check_cmd": ""
+}

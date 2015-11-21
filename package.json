@@ -1,0 +1,24 @@
+{
+  "name": "linode-crud",
+  "version": "1.0.0",
+  "description": "Node.js \"stress testing\" deployment scripts",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandonros/linode-crud.git"
+  },
+  "author": "Brandon Ros",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brandonros/linode-crud/issues"
+  },
+  "homepage": "https://github.com/brandonros/linode-crud#readme",
+  "dependencies": {
+    "bluebird": "^3.0.5",
+    "linode-api": "^0.1.2",
+    "ssh-exec": "^1.3.0"
+  }
+}

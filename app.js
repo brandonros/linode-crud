@@ -139,7 +139,7 @@ function run_command(user, host, password, cmd) {
 	});
 }
 
-function launch_instance(api_key, data_center_id, plan_id, distribution_id, kernel_id, disk_size, root_pass, gist_url) {
+function launch_instance(api_key, data_center_id, plan_id, distribution_id, kernel_id, disk_size, root_pass, cmd) {
 	var client = new api.LinodeClient(api_key);
 
 	var ip;
@@ -154,8 +154,6 @@ function launch_instance(api_key, data_center_id, plan_id, distribution_id, kern
 		})
 		.then(function () {
 			console.log(new Date(), 'Running command...');
-
-			var script = 'wget -O cmd.sh \'' + gist_url + '\'; chmod +x cmd.sh; tmux new-session -d -s cmd; tmux send-keys "./cmd.sh" C-m';
 
 			return run_command('root', ip, root_pass, script);
 		})
@@ -260,7 +258,7 @@ function check_instances(api_key, root_pass, check_cmd) {
 		});
 }
 
-function change_cmd(client, linode_id, root_pass, gist_url) {
+function change_cmd(client, linode_id, root_pass, cmd) {
 	var ip;
 
 	return get_ip_address(client, linode_id)
@@ -269,9 +267,7 @@ function change_cmd(client, linode_id, root_pass, gist_url) {
 
 			console.log(new Date(), 'Changing command...');
 
-			var script = 'tmux kill-session -t cmd; rm cmd.sh; wget -O cmd.sh \'' + gist_url + '\'; chmod +x cmd.sh; tmux new-session -d -s cmd; tmux send-keys "./cmd.sh" C-m';
-
-			return run_command('root', ip, root_pass, script);
+			return run_command('root', ip, root_pass, cmd);
 		});
 }
 
@@ -303,7 +299,7 @@ Promise.resolve()
 	}
 
 	else if (args[0] === '--launch') {
-		return launch_instances(config['num_instances'], config['api_key'], config['data_center_id'], config['plan_id'], config['distribution_id'], config['kernel_id'], config['disk_size'], config['root_pass'], config['gist_url']);
+		return launch_instances(config['num_instances'], config['api_key'], config['data_center_id'], config['plan_id'], config['distribution_id'], config['kernel_id'], config['disk_size'], config['root_pass'], config['launch_cmd']);
 	}
 
 	else if (args[0] === '--check') {
@@ -311,7 +307,7 @@ Promise.resolve()
 	}
 
 	else if (args[0] === '--update') {
-		return update_instances(config['api_key'], config['root_pass'], config['gist_url']);
+		return update_instances(config['api_key'], config['root_pass'], config['update_cmd']);
 	}
 
 	else {
